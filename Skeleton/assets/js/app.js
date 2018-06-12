@@ -44,22 +44,23 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
     });
 
     var xLinearScale = d3.scaleLinear()
-        .domain([d3.min(alldata, d => d.alcohol_consumption)-5, d3.max(alldata, d => d.alcohol_consumption)+5])
+        .domain([d3.min(alldata, d => d.alcohol_consumption)*0.9, d3.max(alldata, d => d.alcohol_consumption)*1.1])
         .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
-        .domain([d3.min(alldata, d => d.bachelor)-5, d3.max(alldata, d => d.bachelor)+5]).nice()
+        .domain([d3.min(alldata, d => d.bachelor)*0.9, d3.max(alldata, d => d.bachelor)*1.1]).nice()
         .range([height, 0]);
 
     var xAxis = d3.axisBottom(xLinearScale);
     var yAxis = d3.axisLeft(yLinearScale);
 
     chartGroup.append("g")
-        .attr("transform", `translate(0, ${height})`)
+        .attr("transform", `translate(10, ${height-5})`)
         .call(xAxis);
 
     chartGroup.append("g")
-    .   call(yAxis);
+        .attr("transform", `translate(10, -5)`)
+        .call(yAxis);
 
     var circlesGroup = chartGroup.selectAll("circle")
         .data(alldata)
