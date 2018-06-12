@@ -73,20 +73,7 @@ function renderYAxis(newYScale, yAxis) {
     return yAxis;
 }
 
-// var circleText = chartGroup.selectAll(null)
-//         .data(alldata)
-//         .enter()
-//         .append('text')
-
-// var textLabels = circleText
-//         .attr('x', d => xLinearScale(d[chosenX]))
-//         .attr('y', d => yLinearScale(d[chosenY])+4)
-//         .attr("text-anchor", "middle")
-//         .text(d => d.state_abbr)
-//         .attr("font-size", "10px")
-//         .attr('font-weight', 'bold')
-//         .attr("fill", "blue");
-
+// function used for updating circles labels positions
 function renderTextX(textLabels, newXScale, chosenX) {
     textLabels.transition()
         .duration(1000)
@@ -116,29 +103,46 @@ function renderCirclesY(circlesGroup, newYScale, chosenY) {
     return circlesGroup;
 }
 
-// function used for updating circles group with new tooltip
-function updateToolTip(chosenX, circlesGroup) {
+function updateToolTip(chosenX, chosenY, circlesGroup, textLabels) {
 
     if (chosenX == "alcohol_consumption") {
-      var labelx = "Alcohol Consumption:";
+        var labelx = "Alcohol Consumption:";
     }
     else if (chosenX == "heart_attack"){
         var labelx = 'Heart Attack:';
     }
     else {
-      var labelx = "Depression:";
+        var labelx = "Depression:";
+    }
+
+    if (chosenY == "bachelor") {
+        var labely = "Bachelor degree:";
+    }
+    else if (chosenY == "high_school"){
+        var labely = 'High school:';
+    }
+    else {
+        var labely = "White:";
     }
   
     var toolTip = d3.tip()
       .attr("class", "tooltip")
       .offset([-5, 70])
       .html(function(d) {
-        return (`${d.state}:<br>${labelx} - ${d.chosenX}<br>${d.chosenY}`);
+        return (`${d.state}:<br>${labelx} - ${d.chosenX}<br>${labely} - ${d.chosenY}`);
         });
   
     circlesGroup.call(toolTip);
   
     circlesGroup.on("mouseover", function(data) {
+        d3.select(this).style("cursor", "pointer");
+        toolTip.show(data);
+      })
+    .on("mouseout", function(data) {
+        toolTip.hide(data);
+    });
+
+    textLabels.on("mouseover", function(data) {
         d3.select(this).style("cursor", "pointer");
         toolTip.show(data);
       })
@@ -199,6 +203,7 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         .attr('x', d => xLinearScale(d[chosenX]))
         .attr('y', d => yLinearScale(d[chosenY]))
         .attr("text-anchor", "middle")
+        .attr('alignment-baseline', 'middle')
         .text(d => d.state_abbr)
         .attr("font-size", "10px")
         .attr('font-weight', 'bold')
@@ -257,7 +262,7 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         .attr("value", "white")
         .text("Third Label (%)");
     
-    var circlesGroup = updateToolTip(chosenX, circlesGroup);
+    var circlesGroup = updateToolTip(chosenX, chosenY, circlesGroup, textLabels);
 
     xlabelsGroup.selectAll("text")
     .on("click", function() {
@@ -272,7 +277,7 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         xLinearScale = xScale(alldata, chosenX);
         xAxis = renderXAxis(xLinearScale, xAxis);
         circlesGroup = renderCirclesX(circlesGroup, xLinearScale, chosenX);
-        circlesGroup = updateToolTip(chosenX, circlesGroup);
+        circlesGroup = updateToolTip(chosenX, chosenY, circlesGroup, textLabels);
         textLabels = renderTextX(textLabels, xLinearScale, chosenX);
 
         if (chosenX == "alcohol_consumption") {
@@ -324,7 +329,7 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         yLinearScale = yScale(alldata, chosenY);
         yAxis = renderYAxis(yLinearScale, yAxis);
         circlesGroup = renderCirclesY(circlesGroup, yLinearScale, chosenY);
-        circlesGroup = updateToolTip(chosenY, circlesGroup);
+        circlesGroup = updateToolTip(chosenX, chosenY, circlesGroup, textLabels);
         textLabels = renderTextY(textLabels, yLinearScale, chosenY);
 
         if (chosenY == "bachelor") {
