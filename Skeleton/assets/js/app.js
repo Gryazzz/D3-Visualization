@@ -13,10 +13,10 @@ var svgHeight = 400;
 // =CORREL(all_data!I:I,all_data!M:M)
 
 var margin = {
-  top: 20,
+  top: 40,
   right: 20,
-  bottom: 50,
-  left: 50
+  bottom: 100,
+  left: 100
 };
 
 var width = svgWidth - margin.left - margin.right;
@@ -118,7 +118,7 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         .attr("text-anchor", "middle")
         .attr("transform", "rotate(-90)")
         
-        .attr("y", 0 - margin.left + 10)
+        .attr("y", 0 - margin.left*0.33)
         .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
         .attr("class", "axisText")
@@ -126,7 +126,7 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
 
     chartGroup.append("text")
         .attr("text-anchor", "middle")
-        .attr("transform", "translate("+ (width/2) + "," + (height + 35) + ")")
+        .attr("transform", "translate("+ (width/2) + "," + (height + margin.bottom*0.33) + ")")
         .attr("class", "axisText")
         .text("Bachelor degree holders (%)");
 
