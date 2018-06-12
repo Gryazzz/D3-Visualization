@@ -2,8 +2,13 @@
  * =========
  * Add styling to your d3 chart with this file. */
 
+#graph svg {
+    background: rgb(230, 243, 247);
+    
+}
+
 .tooltip {
-    background: rgb(87, 87, 240);
+    background: rgb(45, 45, 240);
     color: aliceblue;
     padding: 4px;
     font-size: 10px !important;
@@ -12,23 +17,41 @@
     border-radius: 5px;     
 }
 
+.circles {
+    fill: #cde3f8;
+    stroke: rgb(44, 150, 236);
+    stroke-width: 2.5px;
+    opacity: 0.9;
+}
+
+.circles-text {
+    fill: rgb(50, 95, 241);
+    font-size: 9px;
+    font-weight: bold;
+    text-anchor: middle;
+
+}
+
 .active {
     font-weight: bold;
-    fill: #2846cc;
+    fill: #1030be;
     transition: fill 0.3s ease-out;
     text-anchor: middle;
 }
   
 .inactive {
     font-weight: lighter;
-    fill: #6f81e9;
+    fill: #102391;
     transition: fill 0.3s ease-out;
     text-anchor: middle;
 }
 
 .inactive:hover {
-    fill: #ae0cee;
+    fill: #50a2f0;
     font-weight: normal;
     cursor: pointer;
 }
 
+.domain {
+    stroke: #6f81e9;
+}
