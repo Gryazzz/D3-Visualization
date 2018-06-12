@@ -25,7 +25,7 @@ var svgHeight = window.innerHeight;
 // =CORREL(all_data!I:I,all_data!M:M)
 
 var margin = {
-  top: 40,
+  top: 10,
   right: 20,
   bottom: 90,
   left: 100
@@ -139,9 +139,9 @@ function updateToolTip(chosenX, chosenY, circlesGroup, textLabels) {
   
     var toolTip = d3.tip()
       .attr("class", "tooltip")
-      .offset([-5, 70])
+      .offset([-8, 0])
       .html(function(d) {
-        return (`${d.state}:<br>${labelx} - ${d.chosenX}<br>${labely} - ${d.chosenY}`);
+        return (`${d.state}:<br>${labelx} - ${d[chosenX]}<br>${labely} - ${d[chosenY]}`);
         });
   
     circlesGroup.call(toolTip);
