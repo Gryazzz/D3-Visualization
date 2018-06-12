@@ -1,5 +1,17 @@
-var svgWidth = 700;
-var svgHeight = 400;
+d3.select(window).on("resize", makeResponsive);
+makeResponsive();
+
+function makeResponsive() {
+
+    var svgArea = d3.select("body").select("svg");
+    if (!svgArea.empty()) {
+        svgArea.remove();
+    }
+
+var svgWidth = window.innerWidth;
+var svgHeight = window.innerHeight;
+// var svgWidth = 700;
+// var svgHeight = 500;
 
 // =CORREL(all_data!C:C,all_data!L:L)
 // =CORREL(all_data!C:C,all_data!M:M)
@@ -15,7 +27,7 @@ var svgHeight = 400;
 var margin = {
   top: 40,
   right: 20,
-  bottom: 100,
+  bottom: 90,
   left: 100
 };
 
@@ -368,7 +380,7 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
     }
     });
 })
-
+}
     // var toolTip = d3.tip()
     //     .attr("class", "tooltip")
     //     // .offset([20, -30])
