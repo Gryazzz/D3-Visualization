@@ -73,6 +73,34 @@ function renderYAxis(newYScale, yAxis) {
     return yAxis;
 }
 
+// var circleText = chartGroup.selectAll(null)
+//         .data(alldata)
+//         .enter()
+//         .append('text')
+
+// var textLabels = circleText
+//         .attr('x', d => xLinearScale(d[chosenX]))
+//         .attr('y', d => yLinearScale(d[chosenY])+4)
+//         .attr("text-anchor", "middle")
+//         .text(d => d.state_abbr)
+//         .attr("font-size", "10px")
+//         .attr('font-weight', 'bold')
+//         .attr("fill", "blue");
+
+function renderTextX(textLabels, newXScale, chosenX) {
+    textLabels.transition()
+        .duration(1000)
+        .attr('x', d => newXScale(d[chosenX]));
+    return textLabels;
+}
+
+function renderTextY(textLabels, newYScale, chosenY) {
+    textLabels.transition()
+        .duration(1000)
+        .attr('y', d => newYScale(d[chosenY]));
+    return textLabels;
+}
+
 // function used for updating circles group with a transition to new circles
 function renderCirclesX(circlesGroup, newXScale, chosenX) {
     circlesGroup.transition()
@@ -103,7 +131,7 @@ function updateToolTip(chosenX, circlesGroup) {
   
     var toolTip = d3.tip()
       .attr("class", "tooltip")
-    //   .offset([80, -60])
+      .offset([-5, 70])
       .html(function(d) {
         return (`${d.state}:<br>${labelx} - ${d.chosenX}<br>${d.chosenY}`);
         });
@@ -133,15 +161,11 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
             }
         });
     });
-    // console.log(alldata);
+
 
     var xLinearScale = xScale(alldata, chosenX);
     var yLinearScale = yScale(alldata, chosenY);
     
-
-    // var yLinearScale = d3.scaleLinear()
-    //     .domain([d3.min(alldata, d => d.bachelor)*0.9, d3.max(alldata, d => d.bachelor)*1.1]).nice()
-    //     .range([height, 0]);
 
     var bottomAxis = d3.axisBottom(xLinearScale);
     var leftAxis = d3.axisLeft(yLinearScale);
@@ -173,7 +197,7 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
 
     var textLabels = circleText
         .attr('x', d => xLinearScale(d[chosenX]))
-        .attr('y', d => yLinearScale(d[chosenY])+4)
+        .attr('y', d => yLinearScale(d[chosenY]))
         .attr("text-anchor", "middle")
         .text(d => d.state_abbr)
         .attr("font-size", "10px")
@@ -243,10 +267,13 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
 
         // replaces chosenXAxis with value
         chosenX = value;
+        console.log(chosenX);
+        console.log(chosenY);
         xLinearScale = xScale(alldata, chosenX);
         xAxis = renderXAxis(xLinearScale, xAxis);
         circlesGroup = renderCirclesX(circlesGroup, xLinearScale, chosenX);
         circlesGroup = updateToolTip(chosenX, circlesGroup);
+        textLabels = renderTextX(textLabels, xLinearScale, chosenX);
 
         if (chosenX == "alcohol_consumption") {
             xLabel1
@@ -292,10 +319,13 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
 
         // replaces chosenXAxis with value
         chosenY = value;
+        console.log(chosenY);
+        console.log(chosenX);
         yLinearScale = yScale(alldata, chosenY);
         yAxis = renderYAxis(yLinearScale, yAxis);
         circlesGroup = renderCirclesY(circlesGroup, yLinearScale, chosenY);
         circlesGroup = updateToolTip(chosenY, circlesGroup);
+        textLabels = renderTextY(textLabels, yLinearScale, chosenY);
 
         if (chosenY == "bachelor") {
             yLabel1
