@@ -68,15 +68,29 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         .attr("cx", d => xLinearScale(d.alcohol_consumption))
         .attr("cy", d => yLinearScale(d.bachelor))
         .attr("r", "13")
-        .attr("fill", "violet")
+        .style("fill", "violet")
         .attr("opacity", ".7")
-        .text((d => d.data));
+        .attr("stroke", "blue")
+
+    var circleText = chartGroup.selectAll(null)
+        .data(alldata)
+        .enter()
+        .append('text')
+
+    var textLab = circleText
+        .attr('x', d => xLinearScale(d.alcohol_consumption))
+        .attr('y', d => yLinearScale(d.bachelor)+3)
+        .attr("text-anchor", "middle")
+        .text(d => d.state_abbr)
+        .attr("font-size", "10px")
+        .attr("fill", "blue");
+        
 
     var toolTip = d3.tip()
         .attr("class", "tooltip")
         .offset([20, -30])
         .html(function(d) {
-            return (`${d.state}<br> Alcohol consumption: ${d.alcohol_consumption} <br> Bachelor: ${d.bachelor}`);
+            return (`<st>${d.state}</st><br>Alcohol consumption: ${d.alcohol_consumption}<br>Bachelor: ${d.bachelor}`);
         });
 
     chartGroup.call(toolTip);
@@ -84,7 +98,7 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
     circlesGroup.on("click", function(data) {
             toolTip.show(data);
         })
-        .on("mouseout", function(data, index) {
+        .on("mouseout", function(data) {
             toolTip.hide(data);
         });
 
@@ -104,6 +118,6 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         .attr("class", "axisText")
         .text("Bachelor degree holders (%)");
 
-        
+
     
 });
