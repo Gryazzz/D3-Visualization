@@ -26,4 +26,9 @@
     text-anchor: middle;
 }
 
+.inactive:hover {
+    fill: #ae0cee;
+    font-weight: normal;
+    cursor: pointer;
+}
 

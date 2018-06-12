@@ -46,8 +46,9 @@ function xScale(alldata, chosenX) {
 
 function yScale(alldata, chosenY) {
     var yLinearScale = d3.scaleLinear()
+        // .domain([0, d3.max(alldata, d => d[chosenY])*1.1]).nice()
         .domain([d3.min(alldata, d => d[chosenY])*0.9, d3.max(alldata, d => d[chosenY])*1.1]).nice()
-        .range([height, 0]);
+        .range([height, 20]);
     return yLinearScale;
 }
 
@@ -154,17 +155,6 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         .attr("transform", `translate(10, -5)`)
         .call(leftAxis);
 
-    
-
-
-    // chartGroup.append("g")
-    //     .attr("transform", `translate(10, ${height-5})`)
-    //     .call(xAxis);
-
-    // chartGroup.append("g")
-    //     .attr("transform", `translate(10, -5)`)
-    //     .call(yAxis);
-
     var circlesGroup = chartGroup.selectAll("circle")
         .data(alldata)
         .enter()
@@ -215,7 +205,6 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         .text("Depression (%)");
     
     var ylabelsGroup = chartGroup.append("g")
-        .attr("transform", `translate(${height / 2}, 0-${margin.left})`);
 
     var yLabel1 = ylabelsGroup.append('text')
         .attr("transform", "rotate(-90)")
@@ -223,6 +212,7 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
         .attr("class", "active")
+        .attr("value", "bachelor")
         .text("Bachelor Degree Holders (%)");
     
     var yLabel2 = ylabelsGroup.append('text')
@@ -231,6 +221,7 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
         .attr("class", "inactive")
+        .attr("value", "high_school")
         .text("Second Label (%)");
     
     var yLabel3 = ylabelsGroup.append('text')
@@ -239,6 +230,7 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
         .attr("class", "inactive")
+        .attr("value", "white")
         .text("Third Label (%)");
     
     var circlesGroup = updateToolTip(chosenX, circlesGroup);
@@ -290,7 +282,56 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
               .classed("inactive", true);
         }
     }
-    });    
+    });
+    
+    ylabelsGroup.selectAll("text")
+    .on("click", function() {
+      // get value of selection
+      var value = d3.select(this).attr("value");
+      if (value != chosenY) {
+
+        // replaces chosenXAxis with value
+        chosenY = value;
+        yLinearScale = yScale(alldata, chosenY);
+        yAxis = renderYAxis(yLinearScale, yAxis);
+        circlesGroup = renderCirclesY(circlesGroup, yLinearScale, chosenY);
+        circlesGroup = updateToolTip(chosenY, circlesGroup);
+
+        if (chosenY == "bachelor") {
+            yLabel1
+              .classed("active", true)
+              .classed("inactive", false);
+            yLabel2
+              .classed("active", false)
+              .classed("inactive", true);
+            yLabel3
+              .classed("active", false)
+              .classed("inactive", true);
+        }
+        else if (chosenY == "high_school") {
+            yLabel2
+              .classed("active", true)
+              .classed("inactive", false);
+            yLabel1
+              .classed("active", false)
+              .classed("inactive", true);
+            yLabel3
+              .classed("active", false)
+              .classed("inactive", true);
+        }
+        else {
+            yLabel3
+              .classed("active", true)
+              .classed("inactive", false);
+            yLabel2
+              .classed("active", false)
+              .classed("inactive", true);
+            yLabel1
+              .classed("active", false)
+              .classed("inactive", true);
+        }
+    }
+    });
 })
 
     // var toolTip = d3.tip()
