@@ -117,23 +117,23 @@ function makeResponsive() {
     function updateToolTip(chosenX, chosenY, circlesGroup, textLabels) {
 
         if (chosenX == "alcohol_consumption") {
-            var labelx = "Alcohol Consumption:";
+            var labelx = "Alcohol consumption:";
         }
         else if (chosenX == "heart_attack"){
-            var labelx = 'Heart Attack:';
+            var labelx = 'Heart attack:';
         }
         else {
-            var labelx = "Depression:";
+            var labelx = "Super health:";
         }
 
         if (chosenY == "bachelor") {
             var labely = "Bachelor degree:";
         }
-        else if (chosenY == "high_school"){
-            var labely = 'High school:';
+        else if (chosenY == "to_50000"){
+            var labely = 'Income up to 50000:';
         }
         else {
-            var labely = "White:";
+            var labely = "Labor (25-44):";
         }
     
         var toolTip = d3.tip()
@@ -238,9 +238,9 @@ function makeResponsive() {
         var xLabel3 = xlabelsGroup.append("text")
             .attr("x", 0)
             .attr("y", 60)
-            .attr("value", "depression")
+            .attr("value", "exellent_health")
             .classed("inactive", true)
-            .text("Depression (%)");
+            .text("Respondents with an exellent health (%)");
         
         var ylabelsGroup = chartGroup.append("g")
 
@@ -259,8 +259,8 @@ function makeResponsive() {
             .attr("x", 0 - (height / 2))
             .attr("dy", "1em")
             .attr("class", "inactive")
-            .attr("value", "high_school")
-            .text("Second Label (%)");
+            .attr("value", "to_50000")
+            .text("Household income up to 50000 (%)");
         
         var yLabel3 = ylabelsGroup.append('text')
             .attr("transform", "rotate(-90)")
@@ -268,8 +268,8 @@ function makeResponsive() {
             .attr("x", 0 - (height / 2))
             .attr("dy", "1em")
             .attr("class", "inactive")
-            .attr("value", "white")
-            .text("Third Label (%)");
+            .attr("value", "labor_25_44")
+            .text("Laborers age 25-44 (%)");
         
         var circlesGroup = updateToolTip(chosenX, chosenY, circlesGroup, textLabels);
 
@@ -352,7 +352,7 @@ function makeResponsive() {
                 .classed("active", false)
                 .classed("inactive", true);
             }
-            else if (chosenY == "high_school") {
+            else if (chosenY == "to_50000") {
                 yLabel2
                 .classed("active", true)
                 .classed("inactive", false);
