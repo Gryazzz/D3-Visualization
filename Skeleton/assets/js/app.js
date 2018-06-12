@@ -1,5 +1,5 @@
-var svgWidth = 750;
-var svgHeight = 500;
+var svgWidth = 700;
+var svgHeight = 400;
 
 // =CORREL(all_data!C:C,all_data!L:L)
 // =CORREL(all_data!C:C,all_data!M:M)
@@ -44,11 +44,11 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
     });
 
     var xLinearScale = d3.scaleLinear()
-        .domain([d3.min(alldata, d => d.alcohol_consumption)-10, d3.max(alldata, d => d.alcohol_consumption)+10])
+        .domain([d3.min(alldata, d => d.alcohol_consumption)-5, d3.max(alldata, d => d.alcohol_consumption)+5])
         .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
-        .domain([d3.min(alldata, d => d.bachelor)-10, d3.max(alldata, d => d.bachelor)+10]).nice()
+        .domain([d3.min(alldata, d => d.bachelor)-5, d3.max(alldata, d => d.bachelor)+5]).nice()
         .range([height, 0]);
 
     var xAxis = d3.axisBottom(xLinearScale);
@@ -67,7 +67,7 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         .append("circle")
         .attr("cx", d => xLinearScale(d.alcohol_consumption))
         .attr("cy", d => yLinearScale(d.bachelor))
-        .attr("r", "13")
+        .attr("r", "10")
         .style("fill", "violet")
         .attr("opacity", ".7")
         .attr("stroke", "blue")
@@ -91,7 +91,7 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         .attr("class", "tooltip")
         // .offset([20, -30])
         .html(function(d) {
-            return (`<st>${d.state}</st><br>Alcohol consumption: ${d.alcohol_consumption}<br>Bachelor: ${d.bachelor}`);
+            return (`${d.state}:<br>Alcohol consumption - ${d.alcohol_consumption}<br>Bachelor - ${d.bachelor}`);
         });
 
     chartGroup.call(toolTip);
@@ -100,16 +100,17 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         d3.select(this).style("cursor", "pointer");
         toolTip.show(data);
       })
-        .on("mouseout", function(data, index) {
-          toolTip.hide(data);
+    .on("mouseout", function(data) {
+        toolTip.hide(data);
     });
 
     textLabels.on("mouseover", function(data) {
-        d3.select(this).style("cursor", "pointer");
+        d3.select(this). style("cursor", "pointer");
         toolTip.show(data);
       })
-        .on("mouseout", function(data, index) {
-          toolTip.hide(data);
+      .on("mouseout", function(data) {
+        
+        toolTip.hide(data);
     });
 
     chartGroup.append("text")

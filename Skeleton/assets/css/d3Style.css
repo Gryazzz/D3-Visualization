@@ -2,4 +2,15 @@
  * =========
  * Add styling to your d3 chart with this file. */
 
+ .tooltip {
+     background: rgb(87, 87, 240);
+     color: aliceblue;
+     padding: 4px;
+     font-size: 10px !important;
+     text-align: center !important;
+     font-weight: 600 !important;
+     border-radius: 5px;
+ }
+
  
+  
