@@ -77,30 +77,40 @@ d3.csv('../data/all_data.csv', (err, alldata) => {
         .enter()
         .append('text')
 
-    var textLab = circleText
+    var textLabels = circleText
         .attr('x', d => xLinearScale(d.alcohol_consumption))
-        .attr('y', d => yLinearScale(d.bachelor)+3)
+        .attr('y', d => yLinearScale(d.bachelor)+4)
         .attr("text-anchor", "middle")
         .text(d => d.state_abbr)
         .attr("font-size", "10px")
+        .attr('font-weight', 'bold')
         .attr("fill", "blue");
         
 
     var toolTip = d3.tip()
         .attr("class", "tooltip")
-        .offset([20, -30])
+        // .offset([20, -30])
         .html(function(d) {
             return (`<st>${d.state}</st><br>Alcohol consumption: ${d.alcohol_consumption}<br>Bachelor: ${d.bachelor}`);
         });
 
     chartGroup.call(toolTip);
 
-    circlesGroup.on("click", function(data) {
-            toolTip.show(data);
-        })
-        .on("mouseout", function(data) {
-            toolTip.hide(data);
-        });
+    circlesGroup.on("mouseover", function(data) {
+        d3.select(this).style("cursor", "pointer");
+        toolTip.show(data);
+      })
+        .on("mouseout", function(data, index) {
+          toolTip.hide(data);
+    });
+
+    textLabels.on("mouseover", function(data) {
+        d3.select(this).style("cursor", "pointer");
+        toolTip.show(data);
+      })
+        .on("mouseout", function(data, index) {
+          toolTip.hide(data);
+    });
 
     chartGroup.append("text")
         .attr("text-anchor", "middle")
