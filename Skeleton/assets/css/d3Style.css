@@ -18,8 +18,6 @@
 }
 
 .circles {
-    /* fill: #c2f6fa; */
-    /* stroke: radial-gradient(rgb(7, 43, 248), rgb(75, 101, 247)); */
     /* stroke: rgb(44, 150, 236); */
     stroke-width: 2.5px;
     opacity: 0.9;
