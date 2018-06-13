@@ -164,6 +164,59 @@ function makeResponsive() {
         return circlesGroup;
     }
 
+    // create gradient element
+    var defs = svg.append("defs");
+
+    var gradient = defs.append("linearGradient")
+        .attr("id", "svgGradient")
+        .attr("x1", "0%")
+        .attr("x2", "100%")
+        .attr("y1", "0%")
+        .attr("y2", "100%");
+
+    gradient.append("stop")
+        .attr('class', 'start')
+        .attr("offset", "0%")
+        .attr("stop-color", "rgb(231, 249, 252)")
+        .attr("stop-opacity", 1);
+
+    gradient.append("stop")
+        .attr('class', 'end')
+        .attr("offset", "100%")
+        .attr("stop-color", "rgb(59, 192, 216)")
+        .attr("stop-opacity", 1);
+
+    var gradient2 = defs.append("linearGradient")
+        .attr("id", "svgGradient2")
+        .attr("x1", "0%")
+        .attr("x2", "100%")
+        .attr("y1", "0%")
+        .attr("y2", "100%");
+
+    gradient2.append("stop")
+        .attr('class', 'start')
+        .attr("offset", "0%")
+        .attr("stop-color", "rgb(7, 43, 248)")
+        .attr("stop-opacity", 1);
+    
+    gradient2.append("stop")
+        .attr('class', 'start')
+        .attr("offset", "50%")
+        .attr("stop-color", "rgb(66, 132, 194)")
+        .attr("stop-opacity", 1);
+
+    gradient2.append("stop")
+        .attr('class', 'end')
+        .attr("offset", "100%")
+        .attr("stop-color", "rgb(7, 43, 248)")
+        .attr("stop-opacity", 1);
+    
+    d3.selectAll("#svgGradient")
+        .transition()
+        .duration(1000)
+        .attr("x1", "50%")
+        .attr("y1", "0%")
+
 
     d3.csv('../data/all_data.csv', (err, alldata) => {
         if (err) throw err;
@@ -204,19 +257,23 @@ function makeResponsive() {
             .attr("cx", d => xLinearScale(d[chosenX]))
             .attr("cy", d => yLinearScale(d[chosenY]))
             .attr("r", "10")
+            .attr("stroke", "url(#svgGradient)") //append gradient
+            .attr('fill','url(#svgGradient)')
 
         var circleText = chartGroup.selectAll(null)
             .data(alldata)
             .enter()
             .append('text')
             .classed("circles-text", true)
+            // .attr('fill','url(#svgGradient2)')
+            
 
         var textLabels = circleText
             .attr('x', d => xLinearScale(d[chosenX]))
             .attr('y', d => yLinearScale(d[chosenY]))
             .attr('alignment-baseline', 'middle')
             .text(d => d.state_abbr)
-            
+
         
         var xlabelsGroup = chartGroup.append("g")
             .attr("transform", `translate(${width / 2}, ${height + 10})`);
@@ -378,44 +435,3 @@ function makeResponsive() {
         });
     })
 }
-    // var toolTip = d3.tip()
-    //     .attr("class", "tooltip")
-    //     // .offset([20, -30])
-    //     .html(function(d) {
-    //         return (`${d.state}:<br>Alcohol consumption - ${d.alcohol_consumption}<br>Bachelor - ${d.bachelor}`);
-    //     });
-
-    // chartGroup.call(toolTip);
-
-    // circlesGroup.on("mouseover", function(data) {
-    //     d3.select(this).style("cursor", "pointer");
-    //     toolTip.show(data);
-    //   })
-    // .on("mouseout", function(data) {
-    //     toolTip.hide(data);
-    // });
-
-    // textLabels.on("mouseover", function(data) {
-    //     d3.select(this). style("cursor", "pointer");
-    //     toolTip.show(data);
-    //   })
-    //   .on("mouseout", function(data) {
-        
-    //     toolTip.hide(data);
-    // });
-
-    // chartGroup.append("text")
-    //     .attr("text-anchor", "middle")
-    //     .attr("transform", "rotate(-90)")
-        
-    //     .attr("y", 0 - margin.left*0.33)
-    //     .attr("x", 0 - (height / 2))
-    //     .attr("dy", "1em")
-    //     .attr("class", "axisText")
-    //     .text("Alcohol consumption (%)");
-
-    // chartGroup.append("text")
-    //     .attr("text-anchor", "middle")
-    //     .attr("transform", "translate("+ (width/2) + "," + (height + margin.bottom*0.33) + ")")
-    //     .attr("class", "axisText")
-    //     .text("Bachelor degree holders (%)");
