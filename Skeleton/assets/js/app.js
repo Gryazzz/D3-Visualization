@@ -175,30 +175,30 @@ function makeResponsive() {
         .attr("stop-color", "rgb(59, 192, 216)")
         .attr("stop-opacity", 1);
 
-    var gradient2 = defs.append("linearGradient")
-        .attr("id", "svgGradient2")
-        .attr("x1", "0%")
-        .attr("x2", "100%")
-        .attr("y1", "0%")
-        .attr("y2", "100%");
+    // var gradient2 = defs.append("linearGradient")
+    //     .attr("id", "svgGradient2")
+    //     .attr("x1", "0%")
+    //     .attr("x2", "100%")
+    //     .attr("y1", "0%")
+    //     .attr("y2", "100%");
 
-    gradient2.append("stop")
-        .attr('class', 'start')
-        .attr("offset", "0%")
-        .attr("stop-color", "rgb(7, 43, 248)")
-        .attr("stop-opacity", 1);
+    // gradient2.append("stop")
+    //     .attr('class', 'start')
+    //     .attr("offset", "0%")
+    //     .attr("stop-color", "rgb(7, 43, 248)")
+    //     .attr("stop-opacity", 1);
     
-    gradient2.append("stop")
-        .attr('class', 'start')
-        .attr("offset", "50%")
-        .attr("stop-color", "rgb(66, 132, 194)")
-        .attr("stop-opacity", 1);
+    // gradient2.append("stop")
+    //     .attr('class', 'start')
+    //     .attr("offset", "50%")
+    //     .attr("stop-color", "rgb(66, 132, 194)")
+    //     .attr("stop-opacity", 1);
 
-    gradient2.append("stop")
-        .attr('class', 'end')
-        .attr("offset", "100%")
-        .attr("stop-color", "rgb(7, 43, 248)")
-        .attr("stop-opacity", 1);
+    // gradient2.append("stop")
+    //     .attr('class', 'end')
+    //     .attr("offset", "100%")
+    //     .attr("stop-color", "rgb(7, 43, 248)")
+    //     .attr("stop-opacity", 1);
     
     d3.selectAll("#svgGradient")
         .transition()
