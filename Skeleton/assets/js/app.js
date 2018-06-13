@@ -13,17 +13,6 @@ function makeResponsive() {
     // var svgWidth = 700;
     // var svgHeight = 500;
 
-    // =CORREL(all_data!C:C,all_data!L:L)
-    // =CORREL(all_data!C:C,all_data!M:M)
-    // =CORREL(all_data!C:C,all_data!O:O)
-    // =CORREL(all_data!D:D,all_data!Q:Q)
-    // =CORREL(all_data!E:E,all_data!K:K)
-    // =CORREL(all_data!E:E,all_data!L:L)
-    // =CORREL(all_data!F:F,all_data!U:U)
-    // =CORREL(all_data!G:G,all_data!L:L)
-    // =CORREL(all_data!H:H,all_data!U:U)
-    // =CORREL(all_data!I:I,all_data!M:M)
-
     var margin = {
     top: 20,
     right: 30,
@@ -46,8 +35,8 @@ function makeResponsive() {
 
     // add multiaxis
 
-    var chosenX = 'alcohol_consumption';
-    var chosenY = 'bachelor';
+    var chosenX = 'bachelor';
+    var chosenY = 'alcohol_consumption';
 
     function xScale(alldata, chosenX) {
         var xLinearScale = d3.scaleLinear()
@@ -116,24 +105,24 @@ function makeResponsive() {
 
     function updateToolTip(chosenX, chosenY, circlesGroup, textLabels) {
 
-        if (chosenX == "alcohol_consumption") {
-            var labelx = "Alcohol consumption:";
+        if (chosenY == "alcohol_consumption") {
+            var labely = "Alcohol consumption:";
         }
-        else if (chosenX == "heart_attack"){
-            var labelx = 'Heart attack:';
+        else if (chosenY == "heart_attack"){
+            var labely = 'Heart attack:';
         }
         else {
-            var labelx = "Super health:";
+            var labely = "Super health:";
         }
 
-        if (chosenY == "bachelor") {
-            var labely = "Bachelor degree:";
+        if (chosenX == "bachelor") {
+            var labelx = "Bachelor degree:";
         }
-        else if (chosenY == "to_50000"){
-            var labely = 'Income up to 50000:';
+        else if (chosenX == "to_50000"){
+            var labelx = 'Income up to 50000:';
         }
         else {
-            var labely = "Labor (25-44):";
+            var labelx = "Labor (25-44):";
         }
     
         var toolTip = d3.tip()
@@ -281,23 +270,29 @@ function makeResponsive() {
         var xLabel1 = xlabelsGroup.append("text")
             .attr("x", 0)
             .attr("y", 20)
-            .attr("value", "alcohol_consumption") // value to grab for event listener
+            // .attr("value", "alcohol_consumption") // value to grab for event listener
             .classed("active", true)
-            .text("Alcohol Consumption (%)");
+            // .text("Alcohol Consumption (%)");
+            .attr("value", "bachelor")
+            .text("Bachelor Degree Holders (%)");
 
         var xLabel2 = xlabelsGroup.append("text")
             .attr("x", 0)
             .attr("y", 40)
-            .attr("value", "heart_attack")
+            // .attr("value", "heart_attack")
             .classed("inactive", true)
-            .text("Heart Attack (%)");
+            // .text("Heart Attack (%)");
+            .attr("value", "to_50000")
+            .text("Household income up to 50000 (%)");
 
         var xLabel3 = xlabelsGroup.append("text")
             .attr("x", 0)
             .attr("y", 60)
-            .attr("value", "exellent_health")
+            // .attr("value", "exellent_health")
             .classed("inactive", true)
-            .text("Respondents with an exellent health (%)");
+            // .text("Respondents with an exellent health (%)");
+            .attr("value", "labor_25_44")
+            .text("Laborers age 25-44 (%)");
         
         var ylabelsGroup = chartGroup.append("g")
 
@@ -307,8 +302,8 @@ function makeResponsive() {
             .attr("x", 0 - (height / 2))
             .attr("dy", "1em")
             .attr("class", "active")
-            .attr("value", "bachelor")
-            .text("Bachelor Degree Holders (%)");
+            .attr("value", "alcohol_consumption")
+            .text("Alcohol Consumption (%)");
         
         var yLabel2 = ylabelsGroup.append('text')
             .attr("transform", "rotate(-90)")
@@ -316,8 +311,9 @@ function makeResponsive() {
             .attr("x", 0 - (height / 2))
             .attr("dy", "1em")
             .attr("class", "inactive")
-            .attr("value", "to_50000")
-            .text("Household income up to 50000 (%)");
+            .attr("value", "heart_attack")
+            .text("Heart Attack (%)");
+            
         
         var yLabel3 = ylabelsGroup.append('text')
             .attr("transform", "rotate(-90)")
@@ -325,8 +321,9 @@ function makeResponsive() {
             .attr("x", 0 - (height / 2))
             .attr("dy", "1em")
             .attr("class", "inactive")
-            .attr("value", "labor_25_44")
-            .text("Laborers age 25-44 (%)");
+            .attr("value", "exellent_health")
+            .text("Respondents with an exellent health (%)");
+            
         
         var circlesGroup = updateToolTip(chosenX, chosenY, circlesGroup, textLabels);
 
@@ -346,7 +343,7 @@ function makeResponsive() {
             circlesGroup = updateToolTip(chosenX, chosenY, circlesGroup, textLabels);
             textLabels = renderTextX(textLabels, xLinearScale, chosenX);
 
-            if (chosenX == "alcohol_consumption") {
+            if (chosenX == "bachelor") {
                 xLabel1
                 .classed("active", true)
                 .classed("inactive", false);
@@ -357,7 +354,7 @@ function makeResponsive() {
                 .classed("active", false)
                 .classed("inactive", true);
             }
-            else if (chosenX == "heart_attack") {
+            else if (chosenX == "to_50000") {
                 xLabel2
                 .classed("active", true)
                 .classed("inactive", false);
@@ -398,7 +395,7 @@ function makeResponsive() {
             circlesGroup = updateToolTip(chosenX, chosenY, circlesGroup, textLabels);
             textLabels = renderTextY(textLabels, yLinearScale, chosenY);
 
-            if (chosenY == "bachelor") {
+            if (chosenY == "alcohol_consumption") {
                 yLabel1
                 .classed("active", true)
                 .classed("inactive", false);
@@ -409,7 +406,7 @@ function makeResponsive() {
                 .classed("active", false)
                 .classed("inactive", true);
             }
-            else if (chosenY == "to_50000") {
+            else if (chosenY == "heart_attack") {
                 yLabel2
                 .classed("active", true)
                 .classed("inactive", false);
