@@ -283,7 +283,7 @@ function makeResponsive() {
             .classed("inactive", true)
             // .text("Heart Attack (%)");
             .attr("value", "to_50000")
-            .text("Household income up to 50000 (%)");
+            .text("Household income up to 50 000 (%)");
 
         var xLabel3 = xlabelsGroup.append("text")
             .attr("x", 0)
