@@ -208,8 +208,8 @@ function makeResponsive() {
         .attr("x1", "50%")
         .attr("y1", "0%")
 
-
-    d3.csv('../data/all_data.csv', (err, alldata) => {
+    var dataUrl = 'https://rawgit.com/Gryazzz/D3-Visualization/master/data/all_data.csv'
+    d3.csv(dataUrl, (err, alldata) => {
         if (err) throw err;
         
         //change format to number(float)
