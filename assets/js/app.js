@@ -10,6 +10,8 @@ function makeResponsive() {
 
     var svgWidth = window.innerWidth;
     var svgHeight = window.innerHeight;
+    console.log(svgWidth);
+    console.log(svgHeight);
     // var svgWidth = 700;
     // var svgHeight = 500;
 
