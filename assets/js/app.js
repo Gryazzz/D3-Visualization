@@ -208,7 +208,7 @@ function makeResponsive() {
         .attr("x1", "50%")
         .attr("y1", "0%")
 
-    var dataUrl = 'https://www.sharecsv.com/s/75ccc5f9a97271021597523babebb3bb/all_data.csv'
+    var dataUrl = 'https://rawcdn.githack.com/sonyasha/D3-Visualization/master/data/all_data.csv'
     d3.csv(dataUrl, (err, alldata) => {
         if (err) throw err;
         
